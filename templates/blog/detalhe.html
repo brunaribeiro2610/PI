@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ post.titulo }} | Blog{% endblock %}
+
+{% block content %}
+<section class="blog-detalhe">
+    <div class="container">
+        <article class="post-detalhe">
+            <header class="post-header">
+                <h1 class="titulo">{{ post.titulo }}</h1>
+                <div class="info">
+                    <time class="data" datetime="{{ post.data_publicacao|date:'Y-m-d' }}">
+                        📅 {{ post.data_publicacao|date:"d/m/Y" }}
+                    </time>
+                    <address class="autor">
+                        ✍️ {{ post.autor }}
+                    </address>
+                </div>
+            </header>
+
+            <div class="conteudo">
+                {{ post.conteudo|linebreaks }}
+            </div>
+
+            <footer class="post-footer">
+                <a href="{% url 'blog:lista' %}" class="botao-voltar">
+                    <span aria-hidden="true">←</span> Voltar para o blog
+                </a>
+            </footer>
+        </article>
+
+        <hr class="divisor" aria-hidden="true">
+
+        <aside class="leia-tambem">
+            <h2>Leia também</h2>
+            {% if outros_posts %}
+                <ul class="posts-relacionados">
+                    {% for outro in outros_posts %}
+                        <li>
+                            <a href="{% url 'blog:detalhe' outro.slug %}" class="post-link">
+                                {{ outro.titulo }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="sem-posts">Nenhum outro post disponível.</p>
+            {% endif %}
+        </aside>
+    </div>
+</section>
+{% endblock %}

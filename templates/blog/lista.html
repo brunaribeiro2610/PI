@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block title %}Blog - Dicas e Notícias{% endblock %}
+
+{% block content %}
+<section class="blog-section">
+    <h2 class="blog-title">Dicas e Notícias</h2>
+
+    <div class="blog-grid">
+        {% for post in posts %}
+            <article class="blog-card">
+                <a href="{% url 'blog:detalhe' post.slug %}" class="blog-card-link">
+                    {% if post.imagem %}
+                        <img 
+                            src="{{ post.imagem.url }}" 
+                            alt="{{ post.titulo }}"
+                            class="blog-card-image"
+                            loading="lazy"
+                        >
+                    {% else %}
+                        <div class="blog-placeholder">
+                            <span>Sem imagem</span>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">{{ post.titulo }}</h3>
+                        <time class="blog-date" datetime="{{ post.data_publicacao|date:'Y-m-d' }}">
+                            Publicado em {{ post.data_publicacao|date:"d/m/Y" }}
+                        </time>
+                    </div>
+                </a>
+            </article>
+        {% empty %}
+            <p class="blog-empty">Nenhuma postagem ainda.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

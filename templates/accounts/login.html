@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Entrar</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_username">Email:</label>
+        <input type="email" name="username" id="id_username" required>
+
+        <label for="id_password">Senha:</label>
+        <input type="password" name="password" id="id_password" required>
+
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p class="login-link">
+        Ainda não tem cadastro?
+        <a href="{% url 'accounts:cadastro' %}">Crie uma conta</a>
+    </p>
+</div>
+{% endblock %}

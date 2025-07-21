@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% block title %}Meus Pedidos de Adoção{% endblock %}
+
+{% block content %}
+<h2>Meus Pedidos de Adoção</h2>
+
+<!-- 🔍 Filtros por status -->
+<div class="filtro-status">
+    <a href="{% url 'adocao:meus_pedidos' %}" class="{% if not status_filtro %}ativo{% endif %}">Todos</a>
+    <a href="?status=aguardando" class="{% if status_filtro == 'aguardando' %}ativo{% endif %}">Aguardando</a>
+    <a href="?status=aprovado" class="{% if status_filtro == 'aprovado' %}ativo{% endif %}">Aprovado</a>
+    <a href="?status=recusado" class="{% if status_filtro == 'recusado' %}ativo{% endif %}">Recusado</a>
+</div>
+
+{% if pedidos %}
+<table class="tabela-pedidos">
+    <thead>
+        <tr>
+            <th>Animal</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+        <tr>
+            <td>{{ pedido.animal.nome }}</td>
+            <td>{{ pedido.data_pedido|date:"d/m/Y" }}</td>
+            <td><span class="status {{ pedido.status|lower }}">{{ pedido.status }}</span></td>
+            <td>
+                {% if pedido.status == 'aguardando' %}
+                    <form method="post" action="{% url 'adocao:cancelar_pedido' pedido.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-cancelar">Cancelar</button>
+                    </form>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Você ainda não fez nenhum pedido de adoção.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% block title %}Meus Animais Divulgados{% endblock %}
+{% block content %}
+<h2>Meus Animais Cadastrados</h2>
+<ul>
+    {% for animal in animais %}
+        <li>
+            <strong>{{ animal.nome }}</strong> - 
+            {% if animal.publicado %}Publicado{% else %}Em análise{% endif %}
+        </li>
+    {% empty %}
+        <p>Você ainda não cadastrou nenhum animal.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

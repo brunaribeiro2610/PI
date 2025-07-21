@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Animais para Adoção{% endblock %}
+{% block content %}
+<h2>Animais Disponíveis</h2>
+
+<form method="get">
+    <label>Espécie:
+        <select name="especie">
+            <option value="">Todas</option>
+            <option value="Cão">Cão</option>
+            <option value="Gato">Gato</option>
+            <option value="Outro">Outro</option>
+        </select>
+    </label>
+    <label>Sexo:
+        <select name="sexo">
+            <option value="">Todos</option>
+            <option value="Macho">Macho</option>
+            <option value="Fêmea">Fêmea</option>
+        </select>
+    </label>
+    <label>Porte:
+        <select name="porte">
+            <option value="">Todos</option>
+            <option value="Pequeno">Pequeno</option>
+            <option value="Médio">Médio</option>
+            <option value="Grande">Grande</option>
+        </select>
+    </label>
+    <button type="submit">Filtrar</button>
+</form>
+
+<div class="animal-lista">
+    {% for animal in animais %}
+        <div class="animal-card">
+            <img src="{{ animal.foto.url }}" alt="{{ animal.nome }}" width="200">
+            <h3>{{ animal.nome }}</h3>
+            <p>{{ animal.especie }} - {{ animal.porte }}</p>
+            <a href="{% url 'animais:detalhe' animal.id %}">Ver detalhes</a>
+        </div>
+    {% empty %}
+        <p>Nenhum animal encontrado.</p>
+    {% endfor %}
+</div>
+{% endblock %}

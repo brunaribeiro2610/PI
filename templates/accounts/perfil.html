@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<h2>Olá, {{ request.user.nome }}</h2>
+<p>Email: {{ request.user.email }}</p>
+<p>Telefone: {{ request.user.telefone }}</p>
+<a href="{% url 'accounts:logout' %}">Sair</a>
+{% endblock %}

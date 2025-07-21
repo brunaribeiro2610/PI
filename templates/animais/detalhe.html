@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ animal.nome }}{% endblock %}
+{% block content %}
+<h2>{{ animal.nome }}</h2>
+<img src="{{ animal.foto.url }}" width="300">
+<p><strong>Espécie:</strong> {{ animal.especie }}</p>
+<p><strong>Sexo:</strong> {{ animal.sexo }}</p>
+<p><strong>Porte:</strong> {{ animal.porte }}</p>
+<p><strong>Idade:</strong> {{ animal.idade }} ano(s)</p>
+<p><strong>Raça:</strong> {{ animal.raca }}</p>
+<p><strong>Descrição:</strong><br>{{ animal.descricao }}</p>
+<a href="{% url 'adocao:solicitar' animal.id %}" class="btn">Quero Adotar</a>
+{% endblock %}
